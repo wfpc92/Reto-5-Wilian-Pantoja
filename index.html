@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/vuesax/dist/vuesax.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="./dist/css/styles.css">
+
+</head>
+
+<body>
+  <div id="app" class="container" style="display:none;">
+    <h1>Vue clas 2</h1>
+
+    <select name="" id="" v-model="estudiante_id" @change="cambiob(estudiante_id)">
+      <option v-for="estudiante in estudiantes" :value="estudiante.id">{{estudiante.nombre}}</option>
+    </select>
+
+    <v-select v-model="estudiante_id" label="nombre" :options="estudiantes"></v-select>
+
+    <super-componente v-for="estudiante in estudiantes" :nombre="estudiante.nombre"></super-componente>
+  </div>
+
+  <div id="app_factura" class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="text-left">
+          Facturación
+        </h1>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Información del producto seleccionado</h3>
+          </div>
+          <informacion-producto :facturacion="facturacion"></informacion-producto>
+        </div>
+        <hr>
+        <div class="table-responsive">
+          <table class="table table-hover table-striped">
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+                <th>&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-show="!facturacion.productosAgregados.length">
+                <td colspan="6">
+                  <p class="text-center">
+                    <em>
+                      No se han agregado productos a la factura actual
+                    </em>
+                  </p>
+                </td>
+              </tr>
+              <tr v-for="(producto, indice) in facturacion.productosAgregados">
+                <td>{{ producto.producto }}</td>
+                <td>{{ producto.descripcion }}</td>
+                <td>{{ producto.precio }}</td>
+                <td width="100">
+                  <input type="number" min="1" class="form-control input-sm" v-model="producto.cantidad">
+                </td>
+                <td>{{producto.cantidad * producto.precio }}</td>
+                <td class="text-right">
+                  <button class="btn btn-xs btn-danger" title="Eliminar línea"
+                    @click="eliminarProducto(indice)">&times;</button>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="5" class="text-left">
+                  <strong>Total de la compra:</strong>
+                </td>
+                <td>
+                  <strong>{{ totalLineas | currency }}</strong>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
+  <script src="https://unpkg.com/vue@latest"></script>
+  <script src="https://unpkg.com/vue-select@latest"></script><script src="https://unpkg.com/vue-currency-filter@3.2.3/dist/vue-currency-filter.iife.js"></script>
+  <script src="./dist/js/index.js"></script>
+</body>
+
+</html>
