@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="./dist/css/styles.css">
+  <link rel="stylesheet" href="./src/css/styles.css">
 
 </head>
 
@@ -45,13 +45,15 @@
                 <th>Descripción</th>
                 <th>Precio</th>
                 <th>Cantidad</th>
+                <th>Subtotal</th>
+                <th>IVA</th>
                 <th>Total</th>
                 <th>&nbsp;</th>
               </tr>
             </thead>
             <tbody>
               <tr v-show="!facturacion.productosAgregados.length">
-                <td colspan="6">
+                <td colspan="12">
                   <p class="text-center">
                     <em>
                       No se han agregado productos a la factura actual
@@ -61,12 +63,18 @@
               </tr>
               <tr v-for="(producto, indice) in facturacion.productosAgregados">
                 <td>{{ producto.producto }}</td>
-                <td>{{ producto.descripcion }}</td>
-                <td>{{ producto.precio }}</td>
+                <td>
+                  <input type="text" min="1" class="form-control input-sm" v-model="producto.descripcion">
+                </td>
+                <td>
+                    <input type="number" min="1" class="form-control input-sm" v-model="producto.precio">
+                </td>
                 <td width="100">
                   <input type="number" min="1" class="form-control input-sm" v-model="producto.cantidad">
                 </td>
-                <td>{{producto.cantidad * producto.precio }}</td>
+                <td>{{producto.cantidad * producto.precio | currency }}</td>
+                <td>{{producto.cantidad * producto.precio * 0.19 | currency }}</td>
+                <td>{{producto.cantidad * producto.precio * 1.19 | currency }}</td>
                 <td class="text-right">
                   <button class="btn btn-xs btn-danger" title="Eliminar línea"
                     @click="eliminarProducto(indice)">&times;</button>
@@ -99,9 +107,10 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
   </script>
+  
   <script src="https://unpkg.com/vue@latest"></script>
   <script src="https://unpkg.com/vue-select@latest"></script><script src="https://unpkg.com/vue-currency-filter@3.2.3/dist/vue-currency-filter.iife.js"></script>
-  <script src="./dist/js/index.js"></script>
+  <script src="./src/js/index.js"></script>
 </body>
 
 </html>

@@ -1,21 +1,19 @@
-console.log("perra");
 Vue.component('v-select', VueSelect.VueSelect);
 let nombre = "nombre";
-
 
 Vue.component("super-componente", {
   props: [
     'nombre'
   ],
   template: `<h1>Soy un super compoente y me llamo {{nombre}}</h1>`
-});
+}); 
 var app = new Vue({
   el: "#app",
   data: {
     titulo: "Vue Class 2",
     estudiantes: [{
         id: 1,
-        nombre: "Edwin OrdoÃ±ez"
+        nombre: "Edwin Ordoñez"
       },
       {
         id: 1,
@@ -123,6 +121,9 @@ Vue.component('informacion-producto', {
         lineaFactura.cantidad = parseInt(lineaFactura.cantidad) +
           parseInt(productoSeleccionado.cantidad);
       }
+
+      this.facturacion.productoSeleccionado = {};
+
     },
   }
 })
@@ -147,7 +148,7 @@ new Vue({
     totalLineas: function () {
       var total = 0;
       this.facturacion.productosAgregados.forEach(function (el) {
-        total += el.cantidad * el.precio;
+        total += el.cantidad * el.precio * 1.19;
       });
       return total;
     }

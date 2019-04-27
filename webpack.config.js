@@ -1,6 +1,5 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 var config = {
   mode: "development",
@@ -13,10 +12,24 @@ var config = {
   },
   module: {
     rules: [{
+      test: /\.vue$/,
+      loader: 'vue-loader'
+    }, 
+    {
       test: /\.css$/,
       loader: ['style-loader', 'css-loader']
     }]
   },
+  resolve: {
+    extensions: [
+      '.js',
+      '.vue'
+    ]
+  },
+  plugins: [
+    new VueLoaderPlugin()
+  ]
+  /*
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
@@ -28,12 +41,8 @@ var config = {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
     port: 9000,
-    historyApiFallback: {
-      index: 'index.html'
-    },
-    hot: true,
-    index: 'index.html'
-  }
+    hot: true
+  }*/
 }
 
 module.exports = config;
